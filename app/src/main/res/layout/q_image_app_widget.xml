@@ -1,4 +1,4 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="icon"
@@ -12,27 +12,14 @@
         android:padding="@dimen/widget_margin"
         android:theme="@style/ThemeOverlay.Quodgets.AppWidgetContainer">
 
-        <TextView
-            android:id="@+id/appwidget_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="?attr/appWidgetBackgroundColor"
-            android:contentDescription="@string/appwidget_text"
-            android:text="@string/appwidget_text"
-            android:gravity="start"
-            android:textColor="?attr/appWidgetTextColor"
-            android:textSize="24sp"
-            android:textStyle="bold|italic" />
-
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/QAppWidgetImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_margin="8dp"
-            android:backgroundTint="@color/teal_700"
+            app:showImage="@{icon}"
             android:background="?attr/appWidgetBackgroundColor"/>
     </RelativeLayout>
 </layout>
