@@ -8,6 +8,9 @@ import android.text.Html
 import android.widget.RemoteViews
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.AppWidgetTarget
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.Dispatchers
 
 
@@ -16,53 +19,23 @@ import kotlinx.coroutines.Dispatchers
  * App Widget Configuration implemented in [QAppWidgetConfigureActivity]
  */
 class QAppWidget : AppWidgetProvider() {
-    private var appWidgetTarget: AppWidgetTarget? = null
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        // There may be multiple widgets active, so update all of them
-        for (appWidgetId in appWidgetIds) {
-            QuotesRepository(Dispatchers.Main).quotes.observeForever { list ->
-                updateAppWidget(context, appWidgetManager, appWidgetId, list[0].html)
-            }
-        }
-    }
-
-    
-    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        // When the user deletes the widget, delete the preference associated with it.
-        for (appWidgetId in appWidgetIds) {
-            deleteTitlePref(context, appWidgetId)
-        }
+        getNewRandomQuote(context)
     }
 
     override fun onEnabled(context: Context) {
-        QuotesRepository(Dispatchers.Main).quotes.observeForever { list ->
-            val myWidget = ComponentName(context, QAppWidget::class.java)
-            val manager = AppWidgetManager.getInstance(context)
-            updateAppWidget(context, manager, manager.getAppWidgetIds(myWidget)[0], list[0].html)
-        }
+        getNewRandomQuote(context)
     }
+}
 
-    override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
-
-    companion object {
-        fun pushWidgetUpdate(context: Context?, remoteViews: RemoteViews?) {
-            val myWidget = ComponentName(context!!, QAppWidget::class.java)
-            val manager = AppWidgetManager.getInstance(context)
-            manager.updateAppWidget(myWidget, remoteViews)
-        }
-    }
-
-    fun updateAppWidget(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetId: Int,
-        widgetText: String?
-    ) {
-        val views = RemoteViews(context.packageName, R.layout.q_app_widget)
-        views.setTextViewText(R.id.appwidget_text, Html.fromHtml(widgetText))
-        appWidgetManager.updateAppWidget(appWidgetId, views)
-    }
+internal fun updateTextAppWidget(
+    context: Context,
+    appWidgetManager: AppWidgetManager,
+    appWidgetId: Int,
+    widgetText: String?
+) {
+    val views = RemoteViews(context.packageName, R.layout.q_app_widget)
+    views.setTextViewText(R.id.appwidget_text, Html.fromHtml(widgetText))
+    appWidgetManager.updateAppWidget(appWidgetId, views)
 }
