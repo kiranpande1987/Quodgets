@@ -1,7 +1,6 @@
 package com.kprights.quodgets
 
 import android.provider.DocumentsContract
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
 import java.net.UnknownHostException
@@ -55,6 +54,7 @@ class QuotesRepository(
         return null
     }
 
+    
     fun cancel() {
         job.cancel()
     }

@@ -1,6 +1,5 @@
 package com.kprights.quodgets
 
-import android.util.Log
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -21,7 +20,6 @@ fun showImage(imageView: ImageView, icon: String?) {
     // var imageUrl = "http://openweathermap.org/img/wn/${icon}@4x.png"
     var imageUrl = "http://openweathermap.org/img/wn/10n@4x.png"
 
-    Log.e("Imagggeee", imageUrl)
     imageUrl.let {
         val imgUri = imageUrl.toUri().buildUpon().scheme("http").build()
 
